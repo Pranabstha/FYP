@@ -60,7 +60,7 @@ const Form: React.FC<FormProps> = ({
       <label className={`
         absolute
         text-md
-        duration-150
+        duration-50
         transform
         -translate-y-3
         top-5
