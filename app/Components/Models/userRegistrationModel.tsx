@@ -50,24 +50,33 @@ const userRegistrationModel = () => {
         center
       />
       <Form
-        id="Name"
-        label="Name"
+        id="name"
+        label="name"
         disable={isLoading}
         register={register}
         errors={errors}
         required
       />
       <Form
-        id="Email"
-        label="Email"
+        id="email"
+        label="email"
         disable={isLoading}
         register={register}
         errors={errors}
         required
       />
       <Form
-        id="Password"
-        label="Password"
+        id="password"
+        label="password"
+        type="password"
+        disable={isLoading}
+        register={register}
+        errors={errors}
+        required
+      />
+      <Form
+        id="confirmPassword"
+        label="ConfirmPassword"
         type="password"
         disable={isLoading}
         register={register}
@@ -94,7 +103,7 @@ const userRegistrationModel = () => {
         mt-4  
         font-light"
       >
-        <div className="flex text-center flex-row items-center gap-2">
+        <div className="flex text-center justify-center flex-row items-center gap-2">
           <div>Already Have an Account?</div>
           <div
             className="text-neutral-500
