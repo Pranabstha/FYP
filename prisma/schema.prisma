@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+//user model (schema)
+model User{
+  id String @id @default(auto()) @map("_id") @db.ObjectId//map id to object id which is a specific type mongo db uses
+  name String? 
+  email String? @unique
+  emailVerified DateTime?
+  image String?
+  hashedPassword String?
+  createdAt DateTime @default(now())
+  favs String[] @db.ObjectId
+
+
+  accounts Account[]
+  listings Listing[]
+  resovations Reservation[]
+}
+
+
+model Account{
+  id String @id @default(auto()) @map("_id") @db.ObjectId//map id to object id which is a specific type mongo db uses
+  userId String @db.ObjectId
+  type String
+  provider String
+  providerAccountId String? @db.String
+  refresh_token String? @db.String
+  expiers_at Int?
+  token_type String?
+  scope String?
+  id_token String?@db.String
+  session_state String?
+
+//creates relation using userid and refrences with id in the user model (store id in the userId filed)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+// need a unique combination of the 2 fields which is different than just unique
+  @@unique([provider,providerAccountId])
+}
+
+model Listing{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  descrition String
+  imageSrc String
+  createdat DateTime @default(now())
+  category String
+  roomCount Int
+  bathCount Int
+  guestCount Int
+  locationValues String
+  userId String@db.ObjectId
+
+// relation to user model
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  reservation Reservation[]
+}
+
+model Reservation{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  listingId String @db.ObjectId 
+  startDate DateTime
+  endDate DateTime
+  totalPrice Int
+  createdAt DateTime @default(now())
+
+  // relation to user model
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+}

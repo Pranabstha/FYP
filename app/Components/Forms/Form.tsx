@@ -57,6 +57,7 @@ const Form: React.FC<FormProps> = ({
         ${errors[id] ? 'focus:border-red-500' : 'focus:border-black'}
         `}//peer is used to control the action in inputfield
       />
+      
       <label className={`
         absolute
         text-md

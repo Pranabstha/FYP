@@ -2,7 +2,6 @@
 
 import React from "react";
 import axios from "axios";
-import { AiFillGithub } from "react-icons/ai";
 import RegistrationHeadig from "../navbar/RegistrationHeadig";
 import { FcGoogle } from "react-icons/fc";
 import { useCallback, useState } from "react";
@@ -10,6 +9,8 @@ import Form from "../Forms/Form";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import userRegister from "@/app/hooks/userHook";
 import Model from "./Model";
+import { toast } from "react-hot-toast";
+import Button from "../Button";
 
 const userRegistrationModel = () => {
   const RegisterModel = userRegister();
@@ -34,7 +35,7 @@ const userRegistrationModel = () => {
         RegisterModel.onClose();
       })
       .catch((error) => {
-        console.log("error");
+        toast.error("Could not register");
       })
       .finally(() => {
         setIsLoading(false);
@@ -73,6 +74,39 @@ const userRegistrationModel = () => {
         errors={errors}
         required
       />
+      
+    </div>
+  );
+
+  const footerContent = (
+    <div className=" flex flex-col gap-4 mt-3">
+      <hr />
+      <Button
+        outline
+        label="Continue with Google"
+        icon={FcGoogle}
+        onClick={() => {}}
+      />
+      <div
+        className="
+       text-neutral-500
+        justify-center
+        mt-4  
+        font-light"
+      >
+        <div className="flex text-center flex-row items-center gap-2">
+          <div>Already Have an Account?</div>
+          <div
+            className="text-neutral-500
+          cursor-pointer
+          hover:underline
+          "
+          onClick={RegisterModel.onClose}
+          >
+            Log In
+          </div>
+        </div>
+      </div>
     </div>
   );
   return (
@@ -84,6 +118,7 @@ const userRegistrationModel = () => {
       onClose={RegisterModel.onClose}
       onSubmit={handleSubmit(onSubmit)}
       body={body}
+      footer={footerContent}
     />
   );
 };
