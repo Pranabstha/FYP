@@ -1,19 +1,25 @@
 "use client";
 
 import React from "react";
-import axios from "axios";
 import RegistrationHeadig from "../navbar/RegistrationHeadig";
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
 import Form from "../Forms/Form";
+import {signIn} from  "next-auth/react"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import userLoginHook from "@/app/hooks/userLoginHook";
 import Model from "./Model";
 import { toast } from "react-hot-toast";
 import Button from "../Button";
 import userRegisterHook from "@/app/hooks/userRegisterHook";
+import { useRouter } from "next/navigation";
 
-const userRegistrationModel = () => {
+
+
+const userLoginModel = () => {
+  const router = useRouter();
   const RegisterModel = userRegisterHook();
+  const loginModel = userLoginHook();
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
@@ -21,56 +27,48 @@ const userRegistrationModel = () => {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      name: "",
       email: "",
       password: "",
-      updatedAt: new Date(),
     },
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
-    axios
-      .post("/api/register", data) // data is a field value
-      .then(() => {
-        RegisterModel.onClose();
-        toast.success("Account registed");
-      })
-      .catch((error) => {
-        toast.error("Could not register");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    
+    signIn("credentials", {
+      ...data,
+      redirect: false
+    })
+    .then((callback) =>{
+      setIsLoading(false);
+
+      if(callback?.ok){
+        toast.success("Log in successfull")
+        router.refresh();
+        loginModel.onClose();
+      }
+
+      if(callback?.error){
+        toast.error(callback.error);
+      }
+    })
   };
 
   const body = (
     <div className="flex flex-col gap-4">
       <RegistrationHeadig
-        heading="Welcome to Nameastay,"
-        secondHeading="Where Comfort and Hospitality Unite!"
+        heading="Welcome back to Nameastay,"
+        secondHeading="Log in to yout account"
         center
-      />
-      <Form
-        id="name"
-        label="Name"
-        type="text"
-        disable={isLoading}
-        register={register}
-        errors={errors}
-        required
       />
       <Form
         id="email"
         label="Email"
-        type="email"
-        // pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
         disable={isLoading}
         register={register}
         errors={errors}
         required
       />
-
       <Form
         id="password"
         label="Password"
@@ -100,15 +98,15 @@ const userRegistrationModel = () => {
         font-light"
       >
         <div className="flex text-center justify-center flex-row items-center gap-2">
-          <div>Already Have an Account?</div>
+          <div>Don't have an account?</div>
           <div
             className="text-neutral-500
           cursor-pointer
           hover:underline
           "
-            onClick={RegisterModel.onClose}
+          onClick={RegisterModel.onClose}
           >
-            Log In
+            Sign Up
           </div>
         </div>
       </div>
@@ -117,10 +115,10 @@ const userRegistrationModel = () => {
   return (
     <Model
       disable={isLoading}
-      isOpen={RegisterModel.isOpen}
-      title="Sign In"
+      isOpen={loginModel.isOpen}
+      title="Log In"
       primaryActionLable="Continue"
-      onClose={RegisterModel.onClose}
+      onClose={loginModel.onClose}
       onSubmit={handleSubmit(onSubmit)}
       body={body}
       footer={footerContent}
@@ -128,4 +126,4 @@ const userRegistrationModel = () => {
   );
 };
 
-export default userRegistrationModel;
+export default userLoginModel;

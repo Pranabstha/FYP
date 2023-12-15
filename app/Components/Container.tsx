@@ -1,10 +1,10 @@
+'use client';
 import React from "react";
 
 
 
 
 // marking component as a cliet component to import the container in other components
-'use cleint';
 
 // defines the structure of props that a React component can receive.
 interface ContainerProps {

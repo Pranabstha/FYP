@@ -9,6 +9,6 @@ declare global {
 const client = globalThis.prisma || new PrismaClient()
 //checks if the prisma is not production and else creates a new prisma client 
 //can create multiple clients which casuse uncessary errors
-if(process.env.NODE_ENV !== 'production') globalThis.prisma = client
+if(process.env.NODE_ENV != 'production') globalThis.prisma = client
 
 export default client;

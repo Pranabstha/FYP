@@ -19,10 +19,11 @@ model User {
   image          String?
   hashedPassword String?
   createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
   favs           String[]      @db.ObjectId
   accounts       Account[]
   listings       Listing[]
-  resovations    Reservation[]
+  reservations    Reservation[]
 }
 
 model Account {
@@ -48,7 +49,7 @@ model Account {
 model Listing {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   title          String
-  descrition     String
+  description     String
   imageSrc       String
   createdat      DateTime @default(now())
   category       String

@@ -4,11 +4,22 @@ import React, { useCallback, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "./Avatar";
 
-import userRegister from "@/app/hooks/userHook";
+import userRegisterHook from "@/app/hooks/userRegisterHook";
 import MenuItem from "./MenuItems";
+import userLoginHook from "@/app/hooks/userLoginHook";
+import { User } from "@prisma/client";
+import { signOut } from "next-auth/react";
 
-const UserMenu = () => {
-  const register = userRegister();
+
+interface UserMenuProps{
+  currentUser? : User | null
+}
+
+const UserMenu: React.FC<UserMenuProps>= ({
+  currentUser
+}) => {
+  const register = userRegisterHook();
+  const login = userLoginHook();
   const [isOpen, setIsOpen] = useState(false);
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
@@ -72,10 +83,20 @@ const UserMenu = () => {
         "
         >
           <div className="flex flex-col cursor-pointer">
-            <>
-              <MenuItem onClick={() => {}} label="Log In" />
-              <MenuItem onClick={register.onOpen} label="Sign Up" />
-            </>
+            {currentUser?(
+              <>
+                <MenuItem onClick={() =>{}} label="Reservation" />
+                <MenuItem onClick={() =>{}} label="Favrouties" />
+                <MenuItem onClick={() =>{}} label="Edit profile" />
+                <hr />
+                <MenuItem onClick={() =>signOut()} label="Log Out" />
+              </>
+            ):(
+              <>
+                <MenuItem onClick={login.onOpen} label="Log In" />
+                <MenuItem onClick={register.onOpen} label="Sign Up" />
+              </>
+            )}
           </div>
         </div>
       )}

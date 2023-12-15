@@ -18,7 +18,7 @@ interface FormProps {
 const Form: React.FC<FormProps> = ({
   id,
   label,
-  type = "text",
+  type,
   disable,
   formatPrice,
   required,

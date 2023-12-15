@@ -1,16 +1,16 @@
 import {create} from 'zustand'
 
-interface userHookStore{
+interface userLoginHookStore{
     isOpen: boolean;
     onOpen: ()=> void;
     onClose: ()=> void;
 }
 
-const userHook = create<userHookStore>((set) =>({
+const userLoginHook = create<userLoginHookStore>((set) =>({
     isOpen: false,
     onOpen: () =>set({isOpen: true}),
     onClose: () =>set({isOpen: false}),
 
 }));
 
-export default userHook
+export default userLoginHook;
