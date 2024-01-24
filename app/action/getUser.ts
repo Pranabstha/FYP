@@ -2,7 +2,6 @@
 
 import { getServerSession } from "next-auth/next";
 import { authOption } from "@/pages/api/auth/[...nextauth]";
-import React from 'react'
 import prisma from "@/app/Library/prismdb";
 
 export async function getSession(){
@@ -26,7 +25,12 @@ export default async function getCurrentUser() {
         if(!currentUser){
             return null
         }
-        return currentUser;
+        return {
+            ...currentUser,
+            createdAt: currentUser.createdAt.toISOString(),
+            updatedAt: currentUser.updatedAt.toISOString(),
+            emailVerified: currentUser.emailVerified?.toISOString() || null
+        };
     }
     catch(error: any){
         return null;

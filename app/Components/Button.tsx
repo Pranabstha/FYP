@@ -1,24 +1,28 @@
+// "use client" directive indicates that this component should be executed on the client side
 "use client";
 
+// Importing necessary dependencies
 import React from "react";
 import { IconType } from "react-icons";
 
+// Defining the properties for the Button component
 interface ButtonProps {
   label: string;
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
   outline?: boolean;
   small?: boolean;
-  icon?: IconType;
+  icon?: IconType; // Alias for the icon prop
 }
 
+// Button component with various styling options
 const Button: React.FC<ButtonProps> = ({
   label,
   onClick,
   disabled,
   outline,
   small,
-  icon: Icon, //aalies from the props
+  icon: Icon, // Alias for the icon prop
 }) => {
   return (
     <button
@@ -41,6 +45,7 @@ const Button: React.FC<ButtonProps> = ({
       ${small ? "border-[1px]" : "border-2"}
       `}
     >
+      {/* Render the Icon component if it is provided */}
       {Icon && (
         <Icon
           size={24}
@@ -56,4 +61,5 @@ const Button: React.FC<ButtonProps> = ({
   );
 };
 
+// Exporting the Button component
 export default Button;

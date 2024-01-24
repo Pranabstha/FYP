@@ -1,22 +1,25 @@
+// "use client" directive indicates that this component should be executed on the client side
 "use client";
-
+// Importing necessary dependencies
 import React, { useState, useEffect, useCallback } from "react";
 import { IoMdClose } from "react-icons/io";
 import Button from "../Button";
 
+// Defining the properties for the Model component
 interface ModelProps {
-  isOpen?: boolean;
-  onClose: () => void;
-  onSubmit: () => void;
-  title?: string;
-  body?: React.ReactElement;
-  footer?: React.ReactElement;
-  primaryActionLable: string;
-  disable?: boolean;
-  secondaryAction?: () => void;
-  secondaryActionLable?: string;
+  isOpen?: boolean; // Flag to determine whether the modal is open or closed
+  onClose: () => void; // Callback function to handle closing the modal
+  onSubmit: () => void; // Callback function to handle form submission
+  title?: string; // Title for the modal
+  body?: React.ReactElement; // JSX element for the main content of the modal
+  footer?: React.ReactElement; // JSX element for the footer content of the modal
+  primaryActionLable: string; // Label for the primary action button
+  disable?: boolean; // Flag to disable interaction with the modal
+  secondaryAction?: () => void; // Callback function for secondary action button
+  secondaryActionLable?: string; // Label for the secondary action button
 }
 
+// Model component for displaying a modal
 const Model: React.FC<ModelProps> = ({
   isOpen,
   onClose,
@@ -35,6 +38,7 @@ const Model: React.FC<ModelProps> = ({
     setShowModel(isOpen);
   }, [isOpen]);
 
+  // Callback to handle closing the modal
   const handleClose = useCallback(() => {
     if (disable) {
       return;
@@ -42,16 +46,18 @@ const Model: React.FC<ModelProps> = ({
     setShowModel(false);
     setTimeout(() => {
       onClose();
-    }, 300); //delating the function to set up animation
-  }, [disable,onClose]);
+    }, 300); // Delaying the function to set up animation
+  }, [disable, onClose]);
 
+  // Callback to handle form submission
   const handleSubmit = useCallback(() => {
     if (disable) {
       return;
     }
     onSubmit();
-  }, [disable,onSubmit]);
+  }, [disable, onSubmit]);
 
+  // Callback to handle secondary action (if provided)
   const handleSecondaryAction = useCallback(() => {
     if (disable || !secondaryAction) {
       return;
@@ -59,12 +65,15 @@ const Model: React.FC<ModelProps> = ({
     secondaryAction();
   }, [disable, secondaryAction]);
 
+  // If the modal is not open, return null
   if (!isOpen) {
     return null;
   }
 
+  // JSX structure for the modal
   return (
     <>
+      {/* Modal overlay */}
       <div
         className="
       justify-center
@@ -80,6 +89,7 @@ const Model: React.FC<ModelProps> = ({
       bg-neutral-800/80
       "
       >
+        {/* Modal container */}
         <div
           className="
           relative
@@ -94,7 +104,7 @@ const Model: React.FC<ModelProps> = ({
           md:h-auto
         "
         >
-          {/* content */}
+          {/* Content */}
           <div
             className={`
               translate
@@ -122,7 +132,7 @@ const Model: React.FC<ModelProps> = ({
                 focus:outline-none
               "
             >
-              {/* header */}
+              {/* Header */}
               <div
                 className="
                 flex
@@ -134,6 +144,7 @@ const Model: React.FC<ModelProps> = ({
                 border-b-[1px]
               "
               >
+                {/* Close button */}
                 <button
                   className="
                 p-1
@@ -147,12 +158,14 @@ const Model: React.FC<ModelProps> = ({
                 >
                   <IoMdClose size={15} />
                 </button>
+                {/* Title */}
                 <div className="text-lg font-semibold">{title}</div>
               </div>
-              {/* body */}
+              {/* Body */}
               <div className=" relative p-6 flex-auto">{body}</div>
-              {/* footer */}
+              {/* Footer */}
               <div className="flex flex-col gap-2 p-6">
+                {/* Action buttons */}
                 <div
                   className="
                   flex 
@@ -162,20 +175,23 @@ const Model: React.FC<ModelProps> = ({
                   w-full
                 "
                 >
-                  {secondaryAction && secondaryActionLable &&(
-                  <Button
-                    outline
-                    disabled={disable}
-                    label={secondaryActionLable}
-                    onClick={handleSecondaryAction}
-                  />
+                  {/* Render secondary action button if provided */}
+                  {secondaryAction && secondaryActionLable && (
+                    <Button
+                      outline
+                      disabled={disable}
+                      label={secondaryActionLable}
+                      onClick={handleSecondaryAction}
+                    />
                   )}
+                  {/* Primary action button */}
                   <Button
                     disabled={disable}
                     label={primaryActionLable}
                     onClick={handleSubmit}
                   />
                 </div>
+                {/* Custom footer content */}
                 {footer}
               </div>
             </div>
@@ -186,4 +202,5 @@ const Model: React.FC<ModelProps> = ({
   );
 };
 
+// Exporting the Model component
 export default Model;

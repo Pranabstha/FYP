@@ -1,16 +1,19 @@
-import {create} from 'zustand'
+// Importing create function from Zustand for creating a store
+import { create } from "zustand";
 
-interface userLoginHookStore{
-    isOpen: boolean;
-    onOpen: ()=> void;
-    onClose: ()=> void;
+// Defining the interface for the userLoginHook store
+interface UserLoginHookStore {
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
 }
 
-const userLoginHook = create<userLoginHookStore>((set) =>({
-    isOpen: false,
-    onOpen: () =>set({isOpen: true}),
-    onClose: () =>set({isOpen: false}),
-
+// Creating the userLoginHook store using Zustand
+const userLoginHook = create<UserLoginHookStore>((set) => ({
+  isOpen: false, // Initial state: modal is closed
+  onOpen: () => set({ isOpen: true }), // Function to open the modal
+  onClose: () => set({ isOpen: false }), // Function to close the modal
 }));
 
+// Exporting the userLoginHook store
 export default userLoginHook;
