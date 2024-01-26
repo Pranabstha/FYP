@@ -15,7 +15,7 @@ interface NavbarProps {
 // Defining the Navbar component
 const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
   // // Find session of the user
-  console.log({ currentUser });
+  // console.log({ currentUser });
   // console.log({})
   // JSX for the Navbar component
   return (

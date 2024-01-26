@@ -4,6 +4,7 @@ import React from "react";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import { BiRupee } from "react-icons/bi";
 
+// Define the props interface for the Form component
 interface FormProps {
   id: string;
   label: string;
@@ -11,13 +12,14 @@ interface FormProps {
   disable: boolean;
   formatPrice?: boolean;
   required?: boolean;
-  register: UseFormRegister<FieldValues>;
-  errors: FieldErrors;
+  register: UseFormRegister<FieldValues>; // React Hook Form register function
+  errors: FieldErrors; // Object containing validation errors
   pattern?: {
     value: RegExp;
   };
 }
 
+// Form component is a functional component that takes in FormProps as its props
 const Form: React.FC<FormProps> = ({
   id,
   label,
@@ -31,17 +33,18 @@ const Form: React.FC<FormProps> = ({
 }) => {
   return (
     <div className="w-full relative">
+      {/* Display currency icon if formatPrice prop is provided */}
       {formatPrice && (
         <BiRupee size={24} className="text-neutral-700 absolute top-5 left-2" />
       )}
+      {/* Input field with dynamic styling based on various conditions */}
       <input
         id={id}
         disabled={disable}
         {...register(id, {
           required,
           ...(pattern && { pattern: pattern.value }),
-          // ...(minValue && { min: minValue }),
-        })} //The spread operator is used to expand elements
+        })}
         placeholder=" "
         type={type}
         className={`
@@ -60,9 +63,10 @@ const Form: React.FC<FormProps> = ({
         ${formatPrice ? "pl-9" : "pl-4"}
         ${errors[id] ? "border-red-500" : "border-neutral-300"}
         ${errors[id] ? "focus:border-red-500" : "focus:border-black"}
-        `} //peer is used to control the action in inputfield
+        `}
       />
 
+      {/* Floating label that animates based on input state */}
       <label
         className={`
         absolute

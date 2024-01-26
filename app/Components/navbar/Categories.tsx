@@ -2,33 +2,41 @@
 import React from "react";
 import Container from "../Container";
 import { BsSnow } from "react-icons/bs";
-import { TbMountain, TbPool } from "react-icons/tb";
-import { GiBarn, GiBoatFishing, GiForestCamp, GiIsland } from "react-icons/gi";
-import { MdOutlineVilla } from "react-icons/md";
+import { TbPool } from "react-icons/tb";
+import { GiBarn, GiBoatFishing, GiForestCamp } from "react-icons/gi";
+import {
+  MdBusiness,
+  MdDirectionsBike,
+  MdHotel,
+  MdLocalHotel,
+  MdLocationCity,
+} from "react-icons/md";
 import CategoryBox from "../CategoryBox";
+import { FaHiking } from "react-icons/fa";
+import { FiHome } from "react-icons/fi";
 import { usePathname, useSearchParams } from "next/navigation";
 import { IoDiamond } from "react-icons/io5";
 
 export const categories = [
   {
-    label: "Modern",
-    icon: MdOutlineVilla,
-    description: "This property is modern!",
+    label: "Hotels",
+    icon: MdBusiness,
+    description: "Accommodation is caregories as a hotel",
   },
   {
-    label: "Countryside",
-    icon: TbMountain,
-    description: "This property is in the countryside!",
+    label: "HomeStays",
+    icon: FiHome,
+    description: "Accommodation is caregories as a Homestays",
   },
   {
-    label: "Pools",
-    icon: TbPool,
+    label: "Pool",
+    icon: FiHome,
     description: "This is property has a beautiful pool!",
   },
   {
-    label: "Lake",
-    icon: GiBoatFishing,
-    description: "This property is near a lake!",
+    label: "City",
+    icon: MdLocationCity,
+    description: "Accommodation is in a majorcity",
   },
   {
     label: "Camping",

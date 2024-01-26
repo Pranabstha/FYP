@@ -63,20 +63,20 @@ model Account {
 // Listing model (schema)
 model Listing {
   // Unique identifier for the listing, mapped to MongoDB ObjectId
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  title          String // Listing title
-  description    String // Listing description
-  imageSrc       String // URL of the listing image
-  createdat      DateTime @default(now()) // Date and time of listing creation
-  category       String // Listing category
-  roomCount      Int // Number of rooms in the listing
-  bathCount      Int // Number of bathrooms in the listing
-  guestCount     Int // Maximum guest capacity
-  locationValues String // Location values for the listing
-  userId         String   @db.ObjectId // User ID of the listing owner, mapped to MongoDB ObjectId
-
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String // Listing title
+  description String // Listing description
+  imageSrc    String // URL of the listing image
+  createdat   DateTime @default(now()) // Date and time of listing creation
+  category    String // Listing category
+  roomCount   Int // Number of rooms in the listing
+  bathCount   Int // Number of bathrooms in the listing
+  guestCount  Int // Maximum guest capacity
+  // locationValues String // Location values for the listing
+  userId      String   @db.ObjectId // User ID of the listing owner, mapped to MongoDB ObjectId
+  price       Int
   // Relationship with the User model
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   // Relationship with Reservation model
   reservation Reservation[]

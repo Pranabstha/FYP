@@ -45,7 +45,7 @@ export default async function RootLayout({
         {/* Navbar component with the current user information */}
         <Navbar currentUser={currentUser} />
         {/* Main content of the application */}
-        {children}
+        <div className="pb-20 pt-28">{children}</div>
       </body>
     </html>
   );

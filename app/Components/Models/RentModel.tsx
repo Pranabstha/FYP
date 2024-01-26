@@ -12,6 +12,7 @@ import Form from "../Forms/Form";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import UploadImage from "../Forms/UploadImage";
 
 enum STEPS {
   CATEGORY = 0,
@@ -43,7 +44,7 @@ const RentModel = () => {
       imageSrc: "",
       guestCount: 1,
       roomCount: 1,
-      bathroomCount: 1,
+      bathCount: 1,
       price: 1,
       // location: null,
     },
@@ -52,7 +53,8 @@ const RentModel = () => {
   const category = watch("category");
   const guestCount = watch("guestCount");
   const roomCount = watch("roomCount");
-  const bathroomCount = watch("bathroomCount");
+  const bathCount = watch("bathCount");
+  const imageSrc = watch("imageSrc");
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -71,32 +73,33 @@ const RentModel = () => {
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    if (step !== STEPS.PRICE) {
-      return Forward;
+    if (step !== STEPS.IMAGE) {
+      return Forward();
+    } else {
+      setIsLoading(true);
+      axios
+        .post("/api/listings", data)
+        .then(() => {
+          console.log("0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0");
+          toast.success("Accommodation added successfully");
+          router.refresh();
+          reset();
+          setSteps(STEPS.CATEGORY);
+          rentModel.onClose();
+        })
+        .catch((error) => {
+          // Displaying error toast if registration fails
+          toast.error("Could list Accommodation");
+        })
+        .finally(() => {
+          // Resetting loading state
+          setIsLoading(false);
+        });
     }
-
-    setIsLoading(true);
-    axios
-      .post("/api/listings", data)
-      .then(() => {
-        toast.success("Listing added successfully");
-        router.refresh();
-        reset();
-        setSteps(STEPS.CATEGORY);
-        rentModel.onClose();
-      })
-      .catch((error) => {
-        // Displaying error toast if registration fails
-        toast.error("Could list property");
-      })
-      .finally(() => {
-        // Resetting loading state
-        setIsLoading(false);
-      });
   };
 
   const CheckEndLsiting = useMemo(() => {
-    if (step == STEPS.PRICE) {
+    if (step == STEPS.IMAGE) {
       return "Create";
     }
     return "Next";
@@ -137,17 +140,21 @@ const RentModel = () => {
       </div>
     </div>
   );
-  // if (step === STEPS.LOCATION) {
-  //   body = (
-  //     <div className="flex flex-col gap-8">
-  //       <RegistrationHeadig
-  //         heading="What are the information that "
-  //         secondHeading="Select the location"
-  //       />
-  //       <RegionSelect />
-  //     </div>
-  //   );
-  // }
+
+  if (step === STEPS.IMAGE) {
+    body = (
+      <div className="flex flex-col gap-8">
+        <RegistrationHeadig
+          heading="Post a photo of your accommodation"
+          secondHeading="Show users how your accommodation looks like"
+        />
+        <UploadImage
+          value={imageSrc}
+          onChange={(value) => setCustomValue("imageSrc", value)}
+        />
+      </div>
+    );
+  }
 
   if (step === STEPS.INFO) {
     body = (
@@ -177,9 +184,9 @@ const RentModel = () => {
         <Counter
           title="Bathrooms"
           subtitle="How many Bathrooms are in your accomodation?"
-          value={bathroomCount}
+          value={bathCount}
           onChange={(value) => {
-            setCustomValue("bathroomCount", value);
+            setCustomValue("bathCount", value);
           }}
         />
       </div>
@@ -221,7 +228,7 @@ const RentModel = () => {
       <div className="flex flex-col gap-8">
         <RegistrationHeadig
           heading="set the price of your accomodation"
-          secondHeading="what is the price of your acconodation per night?"
+          secondHeading="what is the price of your accomodation per night?"
         />
         <Form
           id="price"

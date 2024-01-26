@@ -35,33 +35,52 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   //rent model
   const onRent = useCallback(() => {
     if (!currentUser) {
-      return rentModel.onOpen();
+      return loginModel.onOpen();
     }
 
     rentModel.onOpen();
-  }, [currentUser, rentModel, rentModel]);
+  }, [currentUser, loginModel, rentModel]);
 
   // JSX for the UserMenu component
   return (
     <div className="relative">
       {/* Main navigation elements */}
       <div className="flex flex-row items-center gap-3">
-        <div
-          onClick={onRent}
-          className="
-            md: block
-            text: sm 
-            font-semibold
-            py-3
-            px-4
-            rounded-full
-            hover: bg-neutral-100
-            transition
-            cursor-pointer
-          "
-        >
-          List Property
-        </div>
+        {currentUser?.role !== "ADMIN" ? (
+          <div
+            onClick={onRent}
+            className="
+          md: block
+          text: sm 
+          font-semibold
+          py-3
+          px-4
+          rounded-full
+          hover: bg-neutral-100
+          transition
+          cursor-pointer
+        "
+          >
+            List Property
+          </div>
+        ) : (
+          // Display menu items for non-authenticated user
+          <div
+            className="
+          md: block
+          text: sm 
+          font-semibold
+          py-3
+          px-8
+          rounded-full
+          hover: bg-white
+          transition
+          cursor-pointer
+        "
+            hidden
+          ></div>
+        )}
+
         <div
           onClick={toggleOpen}
           className="
@@ -109,6 +128,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
               // Display menu items for authenticated user
               <>
                 <MenuItem onClick={() => {}} label="Reservation" />
+                <MenuItem onClick={rentModel.onOpen} label="Accommodation" />
                 <MenuItem onClick={() => {}} label="Favorites" />
                 <MenuItem onClick={() => {}} label="Edit profile" />
                 <hr />
@@ -120,7 +140,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
               <>
                 <MenuItem onClick={() => {}} label="Admin Dashboard" />
                 <MenuItem onClick={() => {}} label="Manage Users" />
-                <MenuItem onClick={() => {}} label="Manage Listing" />
+                <MenuItem onClick={() => {}} label="Manage Accommodation" />
                 <MenuItem onClick={() => {}} label="Manage Reservations" />
                 {/* Add other admin-specific menu items as needed */}
                 <hr />

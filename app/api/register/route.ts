@@ -19,11 +19,8 @@ export async function POST(request: Request) {
   return NextResponse.json({data: user, message: "User sucessfully created"});
   } catch (error) {
     return NextResponse.json({
-      error,message: "Something went wrong"
+      error,message: "Something went wrong, try again later"
     })
   }
-
-  
-
 
 }
