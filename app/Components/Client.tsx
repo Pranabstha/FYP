@@ -1,7 +1,7 @@
 // Used to fix hydration problems which can occur when the page is reloaded and clicked
-
+"use client";
 // Importing necessary dependencies
-"use Client";
+
 import React, { useState, useEffect } from "react";
 
 // Defining the properties for the Client component
@@ -10,7 +10,7 @@ interface ClientProps {
 }
 
 // Client component to handle hydration problems
-const Client: React.FC<ClientProps> = (children) => {
+const Client: React.FC<ClientProps> = ({ children }) => {
   // State to track whether the component has mounted or not
   const [hasMounted, setHasMounted] = useState(false);
 

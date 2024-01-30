@@ -10,10 +10,11 @@ import userLoginHook from "@/app/hooks/UserLoginHook";
 import { User } from "@prisma/client";
 import { signOut } from "next-auth/react";
 import userRentHook from "@/app/hooks/UserRentHook";
+import { safeUser } from "@/app/Types";
 
 // Defining the props for the UserMenu component
 interface UserMenuProps {
-  currentUser?: User | null;
+  currentUser?: safeUser | null;
 }
 
 // Defining the UserMenu component

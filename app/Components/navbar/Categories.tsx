@@ -1,21 +1,12 @@
 "use client";
 import React from "react";
 import Container from "../Container";
-import { BsSnow } from "react-icons/bs";
-import { TbPool } from "react-icons/tb";
-import { GiBarn, GiBoatFishing, GiForestCamp } from "react-icons/gi";
-import {
-  MdBusiness,
-  MdDirectionsBike,
-  MdHotel,
-  MdLocalHotel,
-  MdLocationCity,
-} from "react-icons/md";
+import { GiBarn } from "react-icons/gi";
+import { MdApartment, MdBusiness } from "react-icons/md";
 import CategoryBox from "../CategoryBox";
-import { FaHiking } from "react-icons/fa";
+import { FaHome } from "react-icons/fa";
 import { FiHome } from "react-icons/fi";
 import { usePathname, useSearchParams } from "next/navigation";
-import { IoDiamond } from "react-icons/io5";
 
 export const categories = [
   {
@@ -29,34 +20,19 @@ export const categories = [
     description: "Accommodation is caregories as a Homestays",
   },
   {
-    label: "Pool",
-    icon: FiHome,
-    description: "This is property has a beautiful pool!",
+    label: "Apartment",
+    icon: MdApartment,
+    description: "Accommodation is caregories as an Appartment",
   },
   {
-    label: "City",
-    icon: MdLocationCity,
-    description: "Accommodation is in a majorcity",
+    label: "Private property",
+    icon: FaHome,
+    description: "Accommodation is caregories as a private property",
   },
   {
-    label: "Camping",
-    icon: GiForestCamp,
-    description: "This property offers camping activities!",
-  },
-  {
-    label: "Arctic",
-    icon: BsSnow,
-    description: "This property is in arctic environment!",
-  },
-  {
-    label: "Farm",
+    label: "Farm House",
     icon: GiBarn,
     description: "This property is in a farm!",
-  },
-  {
-    label: "Lux",
-    icon: IoDiamond,
-    description: "This property is brand new and luxurious!",
   },
 ];
 
