@@ -12,13 +12,13 @@ declare global {
 }
 
 // Define props for the UploadImage component
-interface UploadImagePropps {
+interface UploadImageProps {
   onChange: (value: string) => void;
   value: string;
 }
 
 // UploadImage component
-const UploadImage: React.FC<UploadImagePropps> = ({ onChange, value }) => {
+const UploadImage: React.FC<UploadImageProps> = ({ onChange, value }) => {
   // Callback function to handle image upload
   const handleUpload = useCallback(
     (result: any) => {
@@ -39,12 +39,13 @@ const UploadImage: React.FC<UploadImagePropps> = ({ onChange, value }) => {
           maxFiles: 5, // Set the maximum number of files that can be uploaded
         }}
       >
-        {(props) => {
+        {(props: any) => {
           // Destructure the 'props' object, and get the 'open' function.
           // The 'props' object is passed as an argument to the function component.
           // We use destructuring to extract the 'open' function from 'props'.
           // The '|| {}' is used as a fallback in case 'props' is undefined or null,
           // ensuring that 'open' is assigned an empty object if 'props' is falsy.
+          // Ensure that 'props' is not falsy before destructuring
           const { open } = props || {};
 
           return (
@@ -52,21 +53,21 @@ const UploadImage: React.FC<UploadImagePropps> = ({ onChange, value }) => {
             <div
               onClick={() => open?.()}
               className="
-              relative
-              cursor-pointer
-              hover:opacity-70
-              transition
-              border-dashed 
-              border-2 
-              p-20 
-              border-neutral-300
-              flex
-              flex-col
-              justify-center
-              items-center
-              gap-4
-              text-neutral-600
-            "
+                relative
+                cursor-pointer
+                hover:opacity-70
+                transition
+                border-dashed 
+                border-2 
+                p-20 
+                border-neutral-300
+                flex
+                flex-col
+                justify-center
+                items-center
+                gap-4
+                text-neutral-600
+              "
             >
               {/* Icon for indicating image upload */}
               <TbPhotoPlus size={50} />
@@ -74,10 +75,7 @@ const UploadImage: React.FC<UploadImagePropps> = ({ onChange, value }) => {
               <div className="font-semibold text-lg">Click to upload</div>
               {/* Display the uploaded image if available */}
               {value && (
-                <div
-                  className="
-              absolute inset-0 w-full h-full"
-                >
+                <div className="absolute inset-0 w-full h-full">
                   {/* Display the uploaded image using the Next.js Image component */}
                   <Image
                     fill

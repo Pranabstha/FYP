@@ -15,19 +15,18 @@ datasource db {
 // User model (schema)
 model User {
   // Unique identifier for the user, mapped to MongoDB ObjectId
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
   name           String? // User's name
-  email          String?   @unique // User's email, unique constraint
-  emailVerified  DateTime? // Date and time when email was verified
+  email          String?  @unique // User's email, unique constraint
   image          String? // URL of the user's image
   hashedPassword String? // Hashed password for security
-  createdAt      DateTime  @default(now()) // Date and time of user creation
-  updatedAt      DateTime  @updatedAt // Date and time of last update
-  favs           String[]  @db.ObjectId // List of favorite items, mapped to MongoDB ObjectId
-  role           UserRole  @default(USER) // User role, default is USER
+  createdAt      DateTime @default(now()) // Date and time of user creation
+  updatedAt      DateTime @updatedAt // Date and time of last update
+  favs           String[] @db.ObjectId // List of favorite items, mapped to MongoDB ObjectId
+  role           UserRole @default(USER) // User role, default is USER
 
   // Relationships with other models
-  accounts     Account[]
+
   listings     Listing[]
   reservations Reservation[]
 }
@@ -38,28 +37,6 @@ enum UserRole {
   USER
 }
 
-// Account model (schema)
-model Account {
-  // Unique identifier for the account, mapped to MongoDB ObjectId
-  id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId            String  @db.ObjectId // User ID, mapped to MongoDB ObjectId
-  type              String // Account type
-  provider          String // Account provider
-  providerAccountId String? @db.String // Provider-specific account ID
-  refresh_token     String? @db.String // Refresh token for the account
-  expiers_at        Int? // Expiration time for the token
-  token_type        String? // Type of token
-  scope             String? // Scope of the token
-  id_token          String? @db.String // ID token for the account
-  session_state     String? // Session state for the account
-
-  // Relationship with the User model
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  // Unique constraint for provider and providerAccountId combination
-  @@unique([provider, providerAccountId])
-}
-
 // Listing model (schema)
 model Listing {
   // Unique identifier for the listing, mapped to MongoDB ObjectId
@@ -67,7 +44,7 @@ model Listing {
   title       String // Listing title
   description String // Listing description
   imageSrc    String // URL of the listing image
-  createdat   DateTime @default(now()) // Date and time of listing creation
+  createdAt   DateTime @default(now()) // Date and time of listing creation
   category    String // Listing category
   roomCount   Int // Number of rooms in the listing
   bathCount   Int // Number of bathrooms in the listing

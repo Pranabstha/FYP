@@ -45,7 +45,6 @@ export default async function Home() {
               </div>
             );
           })}
-          {/* <ListingCard/> */}
         </div>
       </Container>
     </Client>

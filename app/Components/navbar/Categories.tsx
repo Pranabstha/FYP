@@ -41,7 +41,11 @@ const Categories = () => {
   const category = params?.get("category");
 
   const pathname = usePathname();
-  const mainPage = pathname === "/";
+  const homePage = pathname === "/";
+
+  if (!homePage) {
+    return null;
+  }
 
   return (
     <div>

@@ -39,6 +39,7 @@ const Form: React.FC<FormProps> = ({
       )}
       {/* Input field with dynamic styling based on various conditions */}
       <input
+        min="1"
         id={id}
         disabled={disable}
         {...register(id, {

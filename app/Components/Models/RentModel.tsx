@@ -13,14 +13,15 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import UploadImage from "../Forms/UploadImage";
+import Map from "../Map";
 
 enum STEPS {
   CATEGORY = 0,
   INFO = 1,
   DESCRIPTION = 2,
   PRICE = 3,
-  IMAGE = 4,
-  // LOCATION = 5,
+  LOCATION = 4,
+  IMAGE = 5,
 }
 
 const RentModel = () => {
@@ -46,14 +47,13 @@ const RentModel = () => {
       roomCount: 1,
       bathCount: 1,
       price: 1,
-      // location: null,
+      location: "",
     },
   });
 
   const category = watch("category");
   const guestCount = watch("guestCount");
   const roomCount = watch("roomCount");
-  const bathCount = watch("bathCount");
   const imageSrc = watch("imageSrc");
 
   const setCustomValue = (id: string, value: any) => {
@@ -80,7 +80,6 @@ const RentModel = () => {
       axios
         .post("/api/listings", data)
         .then(() => {
-          console.log("0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-0");
           toast.success("Accommodation added successfully");
           router.refresh();
           reset();
@@ -141,21 +140,6 @@ const RentModel = () => {
     </div>
   );
 
-  if (step === STEPS.IMAGE) {
-    body = (
-      <div className="flex flex-col gap-8">
-        <RegistrationHeadig
-          heading="Post a photo of your accommodation"
-          secondHeading="Show users how your accommodation looks like"
-        />
-        <UploadImage
-          value={imageSrc}
-          onChange={(value) => setCustomValue("imageSrc", value)}
-        />
-      </div>
-    );
-  }
-
   if (step === STEPS.INFO) {
     body = (
       <div className="flex flex-col gap-8">
@@ -180,15 +164,6 @@ const RentModel = () => {
             setCustomValue("roomCount", value);
           }}
         />
-        <hr />
-        <Counter
-          title="Bathrooms"
-          subtitle="How many Bathrooms are in your accomodation?"
-          value={bathCount}
-          onChange={(value) => {
-            setCustomValue("bathCount", value);
-          }}
-        />
       </div>
     );
   }
@@ -211,7 +186,7 @@ const RentModel = () => {
         />
         <hr />
         <Form
-          id="descrition"
+          id="description"
           label="Description"
           type="text"
           disable={isLoading}
@@ -239,6 +214,42 @@ const RentModel = () => {
           register={register}
           errors={errors}
           required
+        />
+      </div>
+    );
+  }
+
+  if (step === STEPS.LOCATION) {
+    body = (
+      <div className="flex flex-col gap-8">
+        <RegistrationHeadig
+          heading="Select the location of your accomodation"
+          secondHeading="let guest know where your accomodation is located"
+        />
+        <Form
+          id="location"
+          label="Location"
+          type="text"
+          disable={isLoading}
+          register={register}
+          errors={errors}
+          required
+        />
+        <Map />
+      </div>
+    );
+  }
+
+  if (step === STEPS.IMAGE) {
+    body = (
+      <div className="flex flex-col gap-8">
+        <RegistrationHeadig
+          heading="Post a photo of your accommodation"
+          secondHeading="Show users how your accommodation looks like"
+        />
+        <UploadImage
+          value={imageSrc}
+          onChange={(value) => setCustomValue("imageSrc", value)}
         />
       </div>
     );
