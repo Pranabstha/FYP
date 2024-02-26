@@ -12,27 +12,22 @@ export const categories = [
   {
     label: "Hotels",
     icon: MdBusiness,
-    description: "Accommodation is caregories as a hotel",
   },
   {
     label: "HomeStays",
     icon: FiHome,
-    description: "Accommodation is caregories as a Homestays",
   },
   {
     label: "Apartment",
     icon: MdApartment,
-    description: "Accommodation is caregories as an Appartment",
   },
   {
     label: "Private property",
     icon: FaHome,
-    description: "Accommodation is caregories as a private property",
   },
   {
     label: "Farm House",
     icon: GiBarn,
-    description: "This property is in a farm!",
   },
 ];
 

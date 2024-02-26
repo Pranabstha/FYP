@@ -7,12 +7,14 @@ interface CategoryFormProps {
   label: string;
   selected?: boolean;
   onClick: (value: string) => void;
+  required?: boolean;
 }
 
 const CategoryForm: React.FC<CategoryFormProps> = ({
   icon: Icon,
   label,
   selected,
+  required,
   onClick,
 }) => {
   return (

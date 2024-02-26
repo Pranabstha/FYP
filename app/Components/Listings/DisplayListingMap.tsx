@@ -1,26 +1,20 @@
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
-import {
-  MapContainer,
-  Marker,
-  Popup,
-  TileLayer,
-  useMapEvents,
-} from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { LatLngTuple } from "leaflet";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import reverseGeocode from "../api/Map/Location";
+import reverseGeocode from "@/app/api/Map/Location";
 
-interface MapComponentProps {
+interface DisplayListingMapProps {
   handleSetCoordinates: (position: LatLngTuple) => void;
   latitude: number;
   longitude: number;
-  address: string;
+  address: string | null; // Update type to allow null
   setAddress: Dispatch<SetStateAction<string>>;
 }
 
-const MapComponent: React.FC<MapComponentProps> = ({
+const DisplayListingMap: React.FC<DisplayListingMapProps> = ({
   handleSetCoordinates,
   latitude,
   longitude,
@@ -36,13 +30,6 @@ const MapComponent: React.FC<MapComponentProps> = ({
   }: {
     setPosition: (position: LatLngTuple) => void;
   }) {
-    const map = useMapEvents({
-      click(event) {
-        const { lat, lng } = event.latlng;
-        setPosition([lat, lng]);
-      },
-    });
-
     return null;
   }
 
@@ -87,4 +74,4 @@ const MapComponent: React.FC<MapComponentProps> = ({
   );
 };
 
-export default MapComponent;
+export default DisplayListingMap;

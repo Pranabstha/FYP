@@ -77,6 +77,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
           hover: bg-white
           transition
           cursor-pointer
+          
         "
             hidden
           ></div>
@@ -121,10 +122,11 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
             right-0
             top-12
             text-sm
+            min-w-[200px]
           "
         >
           {/* authentication */}
-          <div className="flex flex-col cursor-pointer">
+          <div className="flex flex-col cursor-pointer ">
             {currentUser?.role === "USER" ? (
               // Display menu items for authenticated user
               <>

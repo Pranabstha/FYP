@@ -2,7 +2,7 @@
 
 import UserRentHook from "@/app/hooks/UserRentHook";
 import Model from "./Model";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import RegistrationHeadig from "../navbar/RegistrationHeadig";
 import { categories } from "../navbar/Categories";
 import CategoryForm from "../Forms/CategoryForm";
@@ -13,7 +13,8 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import UploadImage from "../Forms/UploadImage";
-import Map from "../Map";
+import MapComponent from "../Map";
+import { LatLngTuple } from "leaflet";
 
 enum STEPS {
   CATEGORY = 0,
@@ -24,12 +25,18 @@ enum STEPS {
   IMAGE = 5,
 }
 
-const RentModel = () => {
+const LisitngModel = () => {
   const router = useRouter();
   const rentModel = UserRentHook();
 
   const [step, setSteps] = useState(STEPS.CATEGORY);
   const [isLoading, setIsLoading] = useState(false);
+  const [latitude, setLatitude] = useState<number>();
+  const [longitude, setLongitude] = useState<number>();
+  const [address, setAddress] = useState<string>("");
+  const [coordinates, setCoordinates] = useState<LatLngTuple | null>(null);
+  const defLat = 28.3949;
+  const defLong = 84.124;
   const {
     register,
     handleSubmit,
@@ -45,16 +52,27 @@ const RentModel = () => {
       imageSrc: "",
       guestCount: 1,
       roomCount: 1,
-      bathCount: 1,
       price: 1,
-      location: "",
+      latitude: defLat,
+      longitude: defLong,
     },
   });
-
   const category = watch("category");
   const guestCount = watch("guestCount");
   const roomCount = watch("roomCount");
   const imageSrc = watch("imageSrc");
+
+  useEffect(() => {
+    // Check if coordinates are available
+    if (coordinates) {
+      // Destructure latitude and longitude from coordinates
+      const [latitude, longitude] = coordinates;
+
+      // Set latitude and longitude state variables
+      setLatitude(latitude);
+      setLongitude(longitude);
+    }
+  }, [coordinates]);
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -73,12 +91,13 @@ const RentModel = () => {
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    const submit_data = { ...data, latitude, longitude, address };
     if (step !== STEPS.IMAGE) {
       return Forward();
     } else {
       setIsLoading(true);
       axios
-        .post("/api/listings", data)
+        .post("/api/listings", submit_data)
         .then(() => {
           toast.success("Accommodation added successfully");
           router.refresh();
@@ -220,22 +239,23 @@ const RentModel = () => {
   }
 
   if (step === STEPS.LOCATION) {
+    const handleSetCoordinates = (position: LatLngTuple) => {
+      setCoordinates(position);
+    };
+
     body = (
       <div className="flex flex-col gap-8">
         <RegistrationHeadig
           heading="Select the location of your accomodation"
           secondHeading="let guest know where your accomodation is located"
         />
-        <Form
-          id="location"
-          label="Location"
-          type="text"
-          disable={isLoading}
-          register={register}
-          errors={errors}
-          required
+        <MapComponent
+          handleSetCoordinates={handleSetCoordinates}
+          latitude={defLat}
+          longitude={defLong}
+          address={address}
+          setAddress={setAddress}
         />
-        <Map />
       </div>
     );
   }
@@ -269,4 +289,4 @@ const RentModel = () => {
   );
 };
 
-export default RentModel;
+export default LisitngModel;

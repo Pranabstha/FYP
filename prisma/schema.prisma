@@ -29,6 +29,7 @@ model User {
 
   listings     Listing[]
   reservations Reservation[]
+  Review       Review[]
 }
 
 // Enumeration for user roles
@@ -47,9 +48,10 @@ model Listing {
   createdAt   DateTime @default(now()) // Date and time of listing creation
   category    String // Listing category
   roomCount   Int // Number of rooms in the listing
-  bathCount   Int // Number of bathrooms in the listing
   guestCount  Int // Maximum guest capacity
-  // locationValues String // Location values for the listing
+  latitude    Float
+  longitude   Float
+  address     String?
   userId      String   @db.ObjectId // User ID of the listing owner, mapped to MongoDB ObjectId
   price       Int
   // Relationship with the User model
@@ -57,6 +59,7 @@ model Listing {
 
   // Relationship with Reservation model
   reservation Reservation[]
+  Review      Review[]
 }
 
 // Reservation model (schema)
@@ -69,10 +72,22 @@ model Reservation {
   endDate    DateTime // End date of the reservation
   totalPrice Int // Total price for the reservation
   createdAt  DateTime @default(now()) // Date and time of reservation creation
-
+  guestCount Int
+  roomCount  Int
   // Relationship with the User model
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   // Relationship with Listing model
   listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  userId    String   @db.ObjectId // User ID of the reservation holder, mapped to MongoDB ObjectId
+  listingId String   @db.ObjectId
+  rating    Float? // Listing title
+  review    String // Listing description
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
 }

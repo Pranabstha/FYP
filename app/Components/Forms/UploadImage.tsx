@@ -53,21 +53,21 @@ const UploadImage: React.FC<UploadImageProps> = ({ onChange, value }) => {
             <div
               onClick={() => open?.()}
               className="
-                relative
-                cursor-pointer
-                hover:opacity-70
-                transition
-                border-dashed 
-                border-2 
-                p-20 
-                border-neutral-300
-                flex
-                flex-col
-                justify-center
-                items-center
-                gap-4
-                text-neutral-600
-              "
+                  relative
+                  cursor-pointer
+                  hover:opacity-70
+                  transition
+                  border-dashed 
+                  border-2 
+                  p-20 
+                  border-neutral-300
+                  flex
+                  flex-col
+                  justify-center
+                  items-center
+                  gap-4
+                  text-neutral-600
+                "
             >
               {/* Icon for indicating image upload */}
               <TbPhotoPlus size={50} />

@@ -1,12 +1,14 @@
 "use client";
 
 import { useCallback } from "react";
+import toast from "react-hot-toast";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 
 interface CounterProps {
   title: string;
   subtitle: string;
   value: number;
+  maxValue?: number;
   onChange: (value: number) => void;
 }
 
@@ -15,9 +17,14 @@ const Counter: React.FC<CounterProps> = ({
   subtitle,
   value,
   onChange,
+  maxValue,
 }) => {
   const addition = useCallback(() => {
-    onChange(value + 1);
+    if (value !== maxValue) {
+      onChange(value + 1);
+    } else {
+      toast.error("You have exicided the Limit");
+    }
   }, [onChange, value]);
 
   const substration = useCallback(() => {

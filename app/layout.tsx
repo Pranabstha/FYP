@@ -10,8 +10,8 @@ import RegisterModel from "./Components/Models/UserRegistrationModel";
 import LoginModel from "./Components/Models/UserLoginModel";
 import TosterProvider from "./Providers/TosterProvider";
 import getCurrentUser from "./action/getUser";
-import RentModel from "./Components/Models/RentModel";
 import Client from "./Components/Client";
+import ListingModel from "./Components/Models/ListingModel";
 
 // Configuring Nunito font with Latin subset
 const font = Nunito({ subsets: ["latin"] });
@@ -33,7 +33,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       {/* Body of the HTML document */}
-      <body className={font.className}>
+      <body className={font.className} suppressHydrationWarning={true}>
         <Client>
           {/* Toast provider for displaying notifications */}
           <TosterProvider />
@@ -42,7 +42,7 @@ export default async function RootLayout({
           {/* Registration model component */}
           <RegisterModel />
           {/* RentModel model component */}
-          <RentModel />
+          <ListingModel />
           {/* Navbar component with the current user information */}
           <Navbar currentUser={currentUser} />
           {/* Main content of the application */}

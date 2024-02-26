@@ -10,7 +10,7 @@ interface ListingHeadingProps {
   imageSrc: string;
   id: string;
   currentUser: safeUser | null;
-  //   location: string
+  address: string | null;
 }
 
 const ListingHeading: React.FC<ListingHeadingProps> = ({
@@ -18,14 +18,11 @@ const ListingHeading: React.FC<ListingHeadingProps> = ({
   imageSrc,
   id,
   currentUser,
-  //   location
+  address,
 }) => {
   return (
     <>
-      <RegistrationHeadig
-        heading={title}
-        secondHeading="locaiton hal na parcha ya"
-      />
+      <RegistrationHeadig heading={title} secondHeading={address} />
       <div
         className="
         w-full
