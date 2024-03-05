@@ -86,8 +86,8 @@ model Review {
   createdAt DateTime @default(now())
   userId    String   @db.ObjectId // User ID of the reservation holder, mapped to MongoDB ObjectId
   listingId String   @db.ObjectId
-  rating    Float? // Listing title
-  review    String // Listing description
+  rating    Float?
+  review    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
 }

@@ -4,6 +4,7 @@ import Container from "@/app/Components/Container";
 import ListingDetails from "@/app/Components/Listings/ListingDetails";
 import ListingHeading from "@/app/Components/Listings/ListingHeading";
 import ReservationComponent from "@/app/Components/Listings/Reservation/ReservationComponent";
+import RevievComponent from "@/app/Components/Listings/review/RevievComponent";
 import { categories } from "@/app/Components/navbar/Categories";
 import { safeListings, safeUser } from "@/app/Types";
 import userLoginHook from "@/app/hooks/UserLoginHook";
@@ -168,7 +169,9 @@ const ListingComponent: React.FC<ListingComponentProps> = ({
                 maxRoomCount={listing.roomCount}
                 maxGuestCount={listing.guestCount}
               />
-              <div className="p-4"></div>
+              <div className="p-4">
+                <RevievComponent currentUser={currentUser} />
+              </div>
             </div>
           </div>
         </div>
