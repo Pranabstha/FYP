@@ -34,7 +34,7 @@ const DisplayListingMap: React.FC<DisplayListingMapProps> = ({
   }
 
   useEffect(() => {
-    const fetchData = async (lat: any, lon: any) => {
+    const fetchData = async (lat: number, lon: number) => {
       const apiKey = "pk.27db667cc7231ed5971599a2237a64ed";
       const data = await reverseGeocode(lat, lon, apiKey);
       if (data) {

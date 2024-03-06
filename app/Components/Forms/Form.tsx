@@ -1,6 +1,4 @@
-"use client";
-
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import { BiRupee } from "react-icons/bi";
 
@@ -17,6 +15,7 @@ interface FormProps {
   pattern?: {
     value: RegExp;
   };
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void; // Add onChange event
 }
 
 // Form component is a functional component that takes in FormProps as its props
@@ -30,6 +29,7 @@ const Form: React.FC<FormProps> = ({
   register,
   errors,
   pattern,
+  onChange, // Destructure onChange from props
 }) => {
   return (
     <div className="w-full relative">
@@ -46,6 +46,7 @@ const Form: React.FC<FormProps> = ({
           required,
           ...(pattern && { pattern: pattern.value }),
         })}
+        onChange={onChange} // Include onChange event handler directly
         placeholder=" "
         type={type}
         className={`

@@ -1,23 +1,20 @@
 import { Rate } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import { FaStar } from "react-icons/fa";
 
 interface ReviewStars {
   size: number;
+  setRating: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const ReviewStar: React.FC<ReviewStars> = ({ size }) => {
-  const stars = [
-    ...Array(5).map((star) => {
-      return <FaStar size={size} />;
-    }),
-  ];
+const ReviewStar: React.FC<ReviewStars> = ({ setRating }) => {
   return (
     <div className="flex p-5 gap-5">
       <Rate
-        style={{ display: "flex", gap: 5 }}
+        defaultValue={0}
+        style={{ display: "flex", gap: 5, color: "#87CEEB" }}
         allowHalf
-        onChange={(value) => console.log(value)}
+        onChange={(value) => setRating(value)}
       />
     </div>
   );

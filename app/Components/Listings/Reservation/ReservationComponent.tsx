@@ -33,7 +33,7 @@ const ReservationComponent: React.FC<ReservationComponentProps> = ({
   maxRoomCount,
   maxGuestCount,
 }) => {
-  const { setValue, watch, reset } = useForm<FieldValues>({
+  const { setValue, watch } = useForm<FieldValues>({
     defaultValues: {
       guestCount: 1,
       roomCount: 1,
@@ -83,7 +83,6 @@ const ReservationComponent: React.FC<ReservationComponentProps> = ({
         <Calander
           value={dateRange}
           disableDate={disableDate}
-          // onChange={(value) => console.log(value)}
           onChange={(value) => onChangeDate(value.selection)}
         />
       </div>

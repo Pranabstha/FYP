@@ -170,7 +170,7 @@ const ListingComponent: React.FC<ListingComponentProps> = ({
                 maxGuestCount={listing.guestCount}
               />
               <div className="p-4">
-                <RevievComponent currentUser={currentUser} />
+                <RevievComponent currentUser={currentUser} listing={listing} />
               </div>
             </div>
           </div>

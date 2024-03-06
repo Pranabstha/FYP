@@ -1,7 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Form from "../../Forms/Form";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import Button from "../../Button";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -9,20 +9,25 @@ import { useRouter } from "next/navigation";
 
 import React from "react";
 import userLoginHook from "@/app/hooks/UserLoginHook";
-import { safeUser } from "@/app/Types";
+import { safeListings, safeUser } from "@/app/Types";
 import ReviewStar from "./ReviewStar";
 import { Review } from "@prisma/client";
 
 interface ReviewComponentProps {
   review?: Review[];
   currentUser: safeUser | null;
+  listing: safeListings & {
+    user: safeUser;
+  };
 }
 
 const RevievComponent: React.FC<ReviewComponentProps> = ({
   currentUser,
-  review = [],
+  listing,
 }) => {
   const loginModel = userLoginHook();
+  const [rating, setRating] = useState<number>(0);
+  const [review, setReview] = useState("");
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -30,37 +35,32 @@ const RevievComponent: React.FC<ReviewComponentProps> = ({
     formState: { errors },
     reset,
   } = useForm<FieldValues>();
-
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const createReview = useCallback(() => {
     if (!currentUser) {
       return loginModel.onOpen();
     }
-
-    const submit_data = { ...data };
     setIsLoading(true);
-
     axios
-      .post("/api/Review", submit_data)
+      .post("/api/Review", {
+        rating,
+        review,
+        listingId: listing?.id,
+      })
       .then(() => {
-        toast.success("Review added successfully");
+        toast.success("Thank you for your feedback");
         router.refresh();
         reset();
-      })
-      .catch((error) => {
-        // Displaying error toast if registration fails
-        toast.error("Something went wrong, try again later");
-      })
-      .finally(() => {
-        // Resetting loading state
-        setIsLoading(false);
+        setRating(0);
       });
-  };
+  }, [rating, review, listing]);
+
   return (
     <div className=" flex flex-col gap-4">
       <div className="font-semibold text-neutral-600 text-lg">Review</div>
       <div className="font-semibold text-neutral-600">
         <Form
           id="review"
+          onChange={(e) => setReview(e.target.value)}
           label="Write a review"
           type="text"
           disable={isLoading}
@@ -69,10 +69,10 @@ const RevievComponent: React.FC<ReviewComponentProps> = ({
         />
       </div>
       <div className="flex justify-around text-neutral-500">
-        <ReviewStar size={25} />
+        <ReviewStar size={28} setRating={setRating} />
       </div>
       <div>
-        <Button label="Reserve" onClick={onSubmit} disabled={isLoading} />
+        <Button label="Reserve" onClick={createReview} disabled={isLoading} />
       </div>
     </div>
   );

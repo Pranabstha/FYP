@@ -20,15 +20,12 @@ export async function POST(
         roomCount
     } = body;
 
-    console.log(body,'0--0-0-0-00-0-0-0-0-0-0-0-0-')
 
     if(!listingId || !startDate || !endDate || !totalPrice || !guestCount || !roomCount ){
-        console.log('calling')
         return NextResponse.json({'message':"Data Incomplete"},{
             status:400
         })
     }
-    // console.log("))))))))")
     try {     
         const listingReservation = await prisma?.listing.update({
             where:{
@@ -53,8 +50,6 @@ export async function POST(
       return NextResponse.error()
         
     }
-
-    // console.log(listingReservation)
 
 
 }
