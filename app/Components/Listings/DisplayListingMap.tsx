@@ -5,6 +5,7 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { LatLngTuple } from "leaflet";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import reverseGeocode from "@/app/api/Map/Location";
+import dotenv from "dotenv";
 
 interface DisplayListingMapProps {
   handleSetCoordinates: (position: LatLngTuple) => void;
@@ -36,6 +37,8 @@ const DisplayListingMap: React.FC<DisplayListingMapProps> = ({
   useEffect(() => {
     const fetchData = async (lat: number, lon: number) => {
       const apiKey = "pk.27db667cc7231ed5971599a2237a64ed";
+      const MapapiKey = process.env.Map_API_KEY;
+      console.log(MapapiKey);
       const data = await reverseGeocode(lat, lon, apiKey);
       if (data) {
         setAddress(data.filtredAddress);

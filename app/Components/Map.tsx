@@ -48,6 +48,8 @@ const MapComponent: React.FC<MapComponentProps> = ({
 
   useEffect(() => {
     const fetchData = async (lat: any, lon: any) => {
+      // const apiKey = process.env.Map_API_KEY;
+      // console.log(apiKey)
       const apiKey = "pk.27db667cc7231ed5971599a2237a64ed";
       const data = await reverseGeocode(lat, lon, apiKey);
       if (data) {

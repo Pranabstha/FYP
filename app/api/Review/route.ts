@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import getCurrentUser from "@/app/action/getUser";
-import ReviewStar from "@/app/Components/Listings/review/ReviewStar";
 
 
 export async function POST(

@@ -44,11 +44,13 @@ const ReservationComponent: React.FC<ReservationComponentProps> = ({
   const roomCount = watch("roomCount");
 
   useEffect(() => {
-    setGuestCount(guestCount);
-    setRoomCount(roomCount);
+    if (totalPrice !== 0) {
+      setGuestCount(guestCount);
+      setRoomCount(roomCount);
+    }
   }, [guestCount, setGuestCount, setRoomCount, roomCount]);
 
-  const setCustomValue = (id: string, value: any) => {
+  const setCustomValue = (id: string, value: number) => {
     setValue(id, value, {
       shouldValidate: true,
       shouldDirty: true,

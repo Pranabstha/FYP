@@ -30,6 +30,7 @@ export default async function RootLayout({
 }) {
   // Fetching the current user information
   const currentUser = await getCurrentUser();
+  // console.log(currentUser);
   return (
     <html lang="en">
       {/* Body of the HTML document */}
@@ -38,7 +39,7 @@ export default async function RootLayout({
           {/* Toast provider for displaying notifications */}
           <TosterProvider />
           {/* Login model component */}
-          <LoginModel />
+          <LoginModel currentUser={currentUser} />
           {/* Registration model component */}
           <RegisterModel />
           {/* RentModel model component */}

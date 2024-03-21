@@ -7,7 +7,6 @@ import Avatar from "./Avatar";
 import userRegisterHook from "@/app/hooks/UserRegisterHook";
 import MenuItem from "./MenuItems";
 import userLoginHook from "@/app/hooks/UserLoginHook";
-import { User } from "@prisma/client";
 import { signOut } from "next-auth/react";
 import userRentHook from "@/app/hooks/UserRentHook";
 import { safeUser } from "@/app/Types";

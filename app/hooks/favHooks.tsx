@@ -9,47 +9,6 @@ interface userFav {
   listingId: string;
   currentUser?: safeUser | null;
 }
-//   const router = useRouter();
-//   const loginModel = userLoginHook();
-
-//   const hasfav = useMemo(() => {
-//     const listing = currentUser?.favs || [];
-//     return listing.includes(listingId);
-//   }, [currentUser, listingId]);
-
-//   const togglefav = useCallback(
-//     async (event: React.MouseEvent<HTMLDivElement>) => {
-//       event.stopPropagation();
-//       if (!currentUser) {
-//         return loginModel.onOpen();
-//       }
-
-//       try {
-//         let request;
-
-//         if (hasfav) {
-//           request = () => axios.delete(`/api/Fav/${listingId}`);
-//           toast.success("Removed Successfully");
-//           console.log("0-0-0-0-0-0-0-0-0-0-0-0-0-0-0-");
-//         } else {
-//           request = () => axios.post(`/api/Fav/${listingId}`);
-//           toast.success("Removed Successfully");
-//         }
-
-//         await request();
-//         router.refresh();
-//       } catch (error) {
-//         toast.error("Something went wrong.");
-//       }
-//     },
-//     [currentUser, hasfav, loginModel, router, listingId]
-//   );
-
-//   return {
-//     hasfav,
-//     togglefav,
-//   };
-// };
 
 const usefav = ({ listingId, currentUser }: userFav) => {
   const router = useRouter();

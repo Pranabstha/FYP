@@ -4,11 +4,18 @@ import EmptyState from "./Components/EmptyState";
 import Card from "./Components/Listings/Card";
 import Client from "./Components/Client";
 import getCurrentUser from "./action/getUser";
+import homepage from "./pages/home/user/page";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
   const showListings = await getListing();
   const isEmpty = true;
   const currentUser = await getCurrentUser();
+  console.log(currentUser);
+
+  if (currentUser?.role === "ADMIN") {
+    return redirect("/pages/home/admin/");
+  }
 
   if (showListings.length === 0) {
     return <EmptyState showReset />;
@@ -41,6 +48,7 @@ export default async function Home() {
             );
           })}
         </div>
+        {/* <homepage /> */}
       </Container>
     </Client>
   );

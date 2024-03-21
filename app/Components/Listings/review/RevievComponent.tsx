@@ -50,7 +50,6 @@ const RevievComponent: React.FC<ReviewComponentProps> = ({
         toast.success("Thank you for your feedback");
         router.refresh();
         reset();
-        setRating(0);
       });
   }, [rating, review, listing]);
 

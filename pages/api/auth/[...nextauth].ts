@@ -61,7 +61,7 @@ export const authOption: AuthOptions = {
   // Session configuration using JSON Web Token (JWT) strategy
   session: {
     strategy: "jwt",
-    // maxAge: 1800
+    maxAge: 1800
   },
   // Secret used for encrypting JWT tokens
   secret: process.env.NEXTAUTH_SECRET,
