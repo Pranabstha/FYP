@@ -1,5 +1,4 @@
-"use client";
-import { useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 import Form from "../../Forms/Form";
 import { FieldValues, useForm } from "react-hook-form";
 import Button from "../../Button";
@@ -21,7 +20,7 @@ interface ReviewComponentProps {
   };
 }
 
-const RevievComponent: React.FC<ReviewComponentProps> = ({
+const ReviewComponent: React.FC<ReviewComponentProps> = ({
   currentUser,
   listing,
 }) => {
@@ -35,6 +34,8 @@ const RevievComponent: React.FC<ReviewComponentProps> = ({
     formState: { errors },
     reset,
   } = useForm<FieldValues>();
+
+  // Function to handle review submission
   const createReview = useCallback(() => {
     if (!currentUser) {
       return loginModel.onOpen();
@@ -49,9 +50,20 @@ const RevievComponent: React.FC<ReviewComponentProps> = ({
       .then(() => {
         toast.success("Thank you for your feedback");
         router.refresh();
+        setIsLoading(false);
+        setRating(0);
+        setReview("");
         reset();
+      })
+      .catch((error) => {
+        toast.error("Something wnet wrong,try again later");
+        setIsLoading(false);
       });
-  }, [rating, review, listing]);
+  }, [currentUser, listing, loginModel, router, reset, review, rating]);
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setReview(e.target.value);
+  };
 
   return (
     <div className=" flex flex-col gap-4">
@@ -59,16 +71,18 @@ const RevievComponent: React.FC<ReviewComponentProps> = ({
       <div className="font-semibold text-neutral-600">
         <Form
           id="review"
-          onChange={(e) => setReview(e.target.value)}
+          onChange={handleInputChange}
           label="Write a review"
+          // placeholder=
           type="text"
           disable={isLoading}
           register={register}
           errors={errors}
+          value={review}
         />
       </div>
       <div className="flex justify-around text-neutral-500">
-        <ReviewStar size={28} setRating={setRating} />
+        <ReviewStar size={28} defaultValue={rating} setRating={setRating} />
       </div>
       <div>
         <Button label="Reserve" onClick={createReview} disabled={isLoading} />
@@ -77,4 +91,4 @@ const RevievComponent: React.FC<ReviewComponentProps> = ({
   );
 };
 
-export default RevievComponent;
+export default ReviewComponent;

@@ -4,7 +4,6 @@ import EmptyState from "./Components/EmptyState";
 import Card from "./Components/Listings/Card";
 import Client from "./Components/Client";
 import getCurrentUser from "./action/getUser";
-import homepage from "./pages/home/user/page";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
@@ -48,7 +47,6 @@ export default async function Home() {
             );
           })}
         </div>
-        {/* <homepage /> */}
       </Container>
     </Client>
   );

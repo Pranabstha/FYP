@@ -10,6 +10,7 @@ interface FormProps {
   disable: boolean;
   formatPrice?: boolean;
   required?: boolean;
+  value?: string;
   register: UseFormRegister<FieldValues>; // React Hook Form register function
   errors: FieldErrors; // Object containing validation errors
   pattern?: {
@@ -29,6 +30,7 @@ const Form: React.FC<FormProps> = ({
   register,
   errors,
   pattern,
+  value,
   onChange, // Destructure onChange from props
 }) => {
   return (
@@ -39,8 +41,8 @@ const Form: React.FC<FormProps> = ({
       )}
       {/* Input field with dynamic styling based on various conditions */}
       <input
-        min="1"
         id={id}
+        value={value}
         disabled={disable}
         {...register(id, {
           required,
